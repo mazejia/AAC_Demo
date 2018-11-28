@@ -46,7 +46,7 @@ public class DataRepository {
         if(Util.isNetworkConnected(MyApplication.getInstance())){
             return remoteDataSource.isLoadingGirlList();
         } else {
-            return remoteDataSource.isLoadingGirlList();
+            return localDataSource.isLoadingGirlList();
         }
     }
 }

@@ -7,6 +7,7 @@ import com.example.mazejia.aac.aac_demo.api.ApiGirl;
 import com.example.mazejia.aac.aac_demo.api.ApiManager;
 import com.example.mazejia.aac.aac_demo.bean.Girl;
 import com.example.mazejia.aac.aac_demo.bean.GirlData;
+import com.example.mazejia.aac.aac_demo.data.db.AppDataBaseManager;
 
 import java.util.List;
 
@@ -51,7 +52,9 @@ public class RemoteDataRepository implements DataSource {
             public void onResponse(Call<GirlData> call, Response<GirlData> response) {
                 mIsLoadingGirlList.setValue(false);
                 if(response != null && response.isSuccessful()){
-                    mGirlList.setValue(response.body().results);
+                    List<Girl> list = response.body().results;
+                    mGirlList.setValue(list);
+                    refreshLocalGirlList(list);
                 }
             }
 
@@ -66,5 +69,12 @@ public class RemoteDataRepository implements DataSource {
     @Override
     public LiveData<Boolean> isLoadingGirlList() {
         return mIsLoadingGirlList;
+    }
+
+    private void refreshLocalGirlList(List<Girl> girlList) {
+        if (girlList == null || girlList.isEmpty()) {
+            return;
+        }
+        AppDataBaseManager.getInstance().insertGirlList(girlList);
     }
 }

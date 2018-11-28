@@ -3,6 +3,7 @@ package com.example.mazejia.aac.aac_demo.data;
 import android.arch.lifecycle.LiveData;
 
 import com.example.mazejia.aac.aac_demo.bean.Girl;
+import com.example.mazejia.aac.aac_demo.data.db.AppDataBaseManager;
 
 import java.util.List;
 
@@ -27,11 +28,11 @@ public class LocalDataRepository implements DataSource {
 
     @Override
     public LiveData<List<Girl>> getGirlList(int index) {
-        return null;
+        return AppDataBaseManager.getInstance().loadGirlList();
     }
 
     @Override
     public LiveData<Boolean> isLoadingGirlList() {
-        return null;
+        return AppDataBaseManager.getInstance().isLoadingState();
     }
 }
