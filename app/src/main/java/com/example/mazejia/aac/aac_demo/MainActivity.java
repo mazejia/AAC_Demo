@@ -1,7 +1,6 @@
 package com.example.mazejia.aac.aac_demo;
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +16,7 @@ import com.example.mazejia.aac.aac_demo.bean.Girl;
 import com.example.mazejia.aac.aac_demo.data.DataRepository;
 import com.example.mazejia.aac.aac_demo.data.LocalDataRepository;
 import com.example.mazejia.aac.aac_demo.data.RemoteDataRepository;
+import com.example.mazejia.aac.aac_demo.view.LifeCycleView;
 import com.example.mazejia.aac.aac_demo.viewmodel.ListViewModel;
 
 import java.util.List;
@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private View rootView;
     private ListViewModel listViewModel;
+    private LifeCycleView lifeCycleView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
 
         swipeRefreshLayout.setRefreshing(true);
         listViewModel.loadFirstPage();
+
+        lifeCycleView = new LifeCycleView();
+        getLifecycle().addObserver(lifeCycleView);
     }
 
     private void initView(){
